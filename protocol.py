@@ -35,7 +35,7 @@ class Config:
     DUPLICATE_ACK_THRESHOLD = 3
     
     # Channel Simulation
-    PACKET_LOSS_RATE = 0.05  
+    PACKET_LOSS_RATE = 0.2
     BIT_ERROR_RATE = 0.01   
     
     # Connection

@@ -267,16 +267,37 @@ def main():
     
     if mode == 'server':
         server = PRTPServer('localhost', 9999)
+        file_count = 1
+        
         try:
-            server.accept_connection()
-            server.receive_data('received_file.dat')
+            while True:  # Keep server running
+                print(f"\n{'='*60}")
+                print(f"[SERVER] Ready for connection #{file_count}")
+                print(f"{'='*60}\n")
+                
+                # Accept new connection
+                if server.accept_connection():
+                    # Receive data
+                    output_file = f'received_file_{file_count}.dat'
+                    server.receive_data(output_file)
+                    file_count += 1
+                    
+                    # Reset receiver for next connection
+                    server.receiver = None
+                    server.client_addr = None
+                    
+                    print(f"\n[SERVER] Connection closed. Waiting for next client...")
+                else:
+                    print("[SERVER] Connection failed, continuing to listen...")
+                    
+        except KeyboardInterrupt:
+            print("\n[SERVER] Shutting down...")
         finally:
             server.close()
     
     elif mode == 'client':
         if len(sys.argv) < 3:
-            print("Error: Please specify filename to send")
-            print("Usage: python main.py client <filename>")
+            print("Error")
             sys.exit(1)
         
         filename = sys.argv[2]
