@@ -271,9 +271,6 @@ def main():
         
         try:
             while True:  # Keep server running
-                print(f"\n{'='*60}")
-                print(f"[SERVER] Ready for connection #{file_count}")
-                print(f"{'='*60}\n")
                 
                 # Accept new connection
                 if server.accept_connection():
